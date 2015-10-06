@@ -1,0 +1,21 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 5px;
+  overflow: auto;
+}
+
+input[type=text],
+input[type=password] {
+  font-size: 18px;
+  margin-bottom: 2px;
+  outline: none;
+}
+
+input[type=submit] {
+  float: right;
+}

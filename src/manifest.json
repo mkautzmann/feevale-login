@@ -1,0 +1,21 @@
+{
+  "manifest_version": 2,
+
+  "name": "Feevale Login",
+  "description": "Extensão para realizar login na rede interna da Universidade Feevale",
+  "version": "1.0",
+  "permissions": [
+    "*://*.feevale.br/*",
+    "tabs",
+    "storage"
+  ],
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://authportal.feevale.br/*"],
+      "js": ["js/contentScript.js"]
+    }
+  ]
+}
