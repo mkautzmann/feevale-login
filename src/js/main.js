@@ -2,12 +2,24 @@
   'use strict';
 
   var logar = function logar(login, dados) {
-    login.criarTab(function (tab) {
+    login.criarTab([
+      {
+        status: 'complete',
+        testUrl: login.verificarDirecionamento
+      },
+      {
+        status: 'loading',
+        testUrl: login.verificarDirecionamentoDestino
+      }
+    ], function (tab) {
       if (tab === null) return;
 
       if (login.verificarDirecionamento(tab.url)) {
         let informacoes = dados.obter();
         login.inserirDados(informacoes.usuario, informacoes.senha);
+      }
+      else if (login.verificarDirecionamentoDestino(tab.url)) {
+        login.fecharTab();
       }
     });
   };

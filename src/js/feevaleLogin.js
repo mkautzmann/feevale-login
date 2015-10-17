@@ -9,13 +9,25 @@ class FeevaleLogin {
     return url.indexOf('https://authportal.feevale.br') > -1;
   }
 
-  criarTab(callback) {
+  verificarDirecionamentoDestino(url) {
+    return url.indexOf('http://www.feevale.br/') > -1;
+  }
+
+  criarTab(urlStateCallback, callback) {
     var self = this;
 
     chrome.tabs.onUpdated.addListener(function onUpdatedTabCallback(tabId, informacoes, tab) {
       if (self.tabId == null || tabId !== self.tabId) return;
 
-      if (informacoes.status === 'complete') callback(tab);
+      {
+        let i = 0,
+          urlStatesLength = urlStateCallback.length;
+
+        for (; i < urlStatesLength; i++) {
+          if (informacoes.status !== urlStateCallback[i].status) continue;
+          if (urlStateCallback[i].testUrl(tab.url)) callback(tab);
+        }
+      };
     });
 
     chrome.tabs.create({url: this.feevaleUrl, active: false}, function criarTabCallback(tab) {
@@ -28,5 +40,11 @@ class FeevaleLogin {
       usuario: usuario,
       senha: senha
     });
+  }
+
+  fecharTab() {
+    if (this.tabId == null) return;
+
+    chrome.tabs.remove(this.tabId);
   }
 }
