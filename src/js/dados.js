@@ -11,15 +11,17 @@ class Dados {
     });
   }
 
-  salvar(usuario, senha) {
+  salvar(usuario, senha, callback) {
     if (usuario == null || usuario === '' || senha == null || senha === '') return false;
+
+    callback = callback || function() {};
 
     usuario = btoa(usuario);
     senha = btoa(senha);
     chrome.storage.sync.set({
       usuario: usuario,
       senha: senha
-    });
+    }, callback);
 
     return true;
   }

@@ -12,6 +12,8 @@
 
     if (usuario === '' || senha === '') return;
 
-    dados.salvar(usuario, senha);
+    dados.salvar(usuario, senha, function() {
+      alert('Dados salvos com sucesso!');
+    });
   });
 }(new Dados()));
