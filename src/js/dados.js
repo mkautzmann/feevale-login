@@ -1,32 +1,42 @@
 'use strict';
 
 class Dados {
-  constructor() {
-    this.usuarioStorage = 'feevaleLoginUsuario';
-    this.senhaStorage = 'feevaleLoginSenha';
-  }
-
-  verificarExistemDados() {
-    var usuario = localStorage[this.usuarioStorage],
-      senha = localStorage[this.senhaStorage];
-
-    return (usuario != null && usuario !== '') && (senha != null && senha !== '');
+  verificarExistemDados(callback) {
+    chrome.storage.sync.get({
+      usuario: null,
+      senha: null
+    }, function obterStorageCallback(itens) {
+      var existemDados = ((itens.usuario != null && itens.usuario !== '') && (itens.senha != null && itens.senha !== ''));
+      callback(existemDados);
+    });
   }
 
   salvar(usuario, senha) {
     if (usuario == null || usuario === '' || senha == null || senha === '') return false;
 
-    localStorage[this.usuarioStorage] = usuario;
-    localStorage[this.senhaStorage] = senha;
+    usuario = btoa(usuario);
+    senha = btoa(senha);
+    chrome.storage.sync.set({
+      usuario: usuario,
+      senha: senha
+    });
 
     return true;
   }
 
-  obter() {
-    if (!this.verificarExistemDados()) return null;
-    return {
-      usuario: localStorage[this.usuarioStorage],
-      senha: localStorage[this.senhaStorage]
-    };
+  obter(callback) {
+    this.verificarExistemDados(function(existemDados) {
+      if (!existemDados) callback(null);
+
+      chrome.storage.sync.get({
+        usuario: null,
+        senha: null
+      }, function obterStorageCallback(itens) {
+        callback({
+          usuario: atob(itens.usuario),
+          senha: atob(itens.senha)
+        });
+      });
+    });
   }
 }

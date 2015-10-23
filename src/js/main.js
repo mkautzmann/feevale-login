@@ -15,8 +15,9 @@
       if (tab === null) return;
 
       if (login.verificarDirecionamento(tab.url)) {
-        let informacoes = dados.obter();
-        login.inserirDados(informacoes.usuario, informacoes.senha);
+        let informacoes = dados.obter(function(informacoes) {
+          login.inserirDados(informacoes.usuario, informacoes.senha);
+        });
       }
       else if (login.verificarDirecionamentoDestino(tab.url)) {
         login.fecharTab();
@@ -26,20 +27,8 @@
 
   var dados = new Dados(),
     feevaleLogin = new FeevaleLogin();
-  if (dados.verificarExistemDados()) {
+  dados.verificarExistemDados(function(existemDados) {
+    if (!existemDados) return;
     logar(feevaleLogin, dados);
-  }
-  else {
-    document.getElementById('salvar').addEventListener('click', function () {
-      var usuario = document.getElementById('usuario'),
-        senha = document.getElementById('senha');
-
-      if (usuario !== '' && senha !== '') {
-        dados.salvar(usuario.value, senha.value);
-        logar(feevaleLogin);
-      }
-
-      return false;
-    });
-  }
+  });
 }());

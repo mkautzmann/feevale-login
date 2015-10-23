@@ -44,7 +44,6 @@ class FeevaleLogin {
 
   fecharTab() {
     if (this.tabId == null) return;
-
     chrome.tabs.remove(this.tabId);
   }
 }

@@ -15,7 +15,3 @@ input[type=password] {
   margin-bottom: 2px;
   outline: none;
 }
-
-input[type=submit] {
-  float: right;
-}
