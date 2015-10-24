@@ -1,7 +1,7 @@
 (function(dados) {
   dados.obter(function(informacoes) {
     var usuario = document.getElementById('usuario');
-    if (informacoes == null || informacoes.usuario == null) return;
+    if (informacoes === null || informacoes.usuario === null) return;
 
     usuario.value = informacoes.usuario;
   });

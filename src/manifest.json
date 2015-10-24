@@ -8,13 +8,16 @@
     "16": "img/logo-16.png",
     "32": "img/logo-32.png",
     "48": "img/logo-48.png",
-    "64": "img/logo-64.png"
+    "64": "img/logo-64.png",
+    "128": "img/logo-128.png"
   },
   "permissions": [
     "*://*.feevale.br/*",
+    "https://ssl.google-analytics.com/",
     "tabs",
     "storage"
   ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "browser_action": {
     "default_icon": {
       "19": "img/logo-16.png",
@@ -28,5 +31,8 @@
       "matches": ["https://authportal.feevale.br/*"],
       "js": ["js/contentScript.js"]
     }
-  ]
+  ],
+  "background": {
+    "scripts": ["js/ga.js"]
+  }
 }
