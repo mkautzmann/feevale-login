@@ -1,0 +1,6 @@
+# Usa apenas LF, evita problemas entre Windows e Unix
+*.html   text eol=lf
+*.js     text eol=lf
+*.json   text eol=lf
+*.css   text eol=lf
+*.md     text eol=lf
